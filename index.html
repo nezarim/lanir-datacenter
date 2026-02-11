@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>קבוצת לניר | שותפות דאטה סנטר לבעלי נכסים</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0a1628;
+            --accent: #00d4ff;
+            --accent2: #7b61ff;
+            --green: #00e676;
+            --dark-bg: #060d1b;
+            --card-bg: rgba(255,255,255,0.04);
+            --card-border: rgba(255,255,255,0.08);
+            --text: #e0e6f0;
+            --text-dim: #8892a4;
+            --gradient: linear-gradient(135deg, #00d4ff, #7b61ff);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Heebo', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-grid {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-image:
+                linear-gradient(rgba(0,212,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,212,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .glow-orb {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .glow-orb.blue { background: var(--accent); top: -200px; right: -200px; }
+        .glow-orb.purple { background: var(--accent2); bottom: -200px; left: -200px; }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(6,13,27,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 16px 0;
+            transition: all 0.3s;
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+        .nav-links { display: flex; gap: 32px; list-style: none; }
+        .nav-links a {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent); }
+        .nav-cta {
+            background: var(--gradient);
+            color: #fff !important;
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            -webkit-text-fill-color: #fff !important;
+        }
+
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+        .hero-content {
+            max-width: 700px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,212,255,0.1);
+            border: 1px solid rgba(0,212,255,0.2);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            margin-bottom: 24px;
+        }
+        .hero-badge::before {
+            content: '';
+            width: 8px; height: 8px;
+            background: var(--green);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            line-height: 1.15;
+            margin-bottom: 24px;
+        }
+        .hero h1 .highlight {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+            max-width: 560px;
+        }
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--gradient);
+            color: #fff;
+            padding: 16px 40px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 4px 30px rgba(0,212,255,0.3);
+        }
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(0,212,255,0.4);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 64px;
+            padding-top: 32px;
+            border-top: 1px solid var(--card-border);
+        }
+        .stat-num {
+            font-size: 2rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-top: 4px;
+        }
+
+        /* Sections */
+        section {
+            padding: 100px 0;
+        }
+        .section-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        .section-desc {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin-bottom: 60px;
+        }
+
+        /* Problem section */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+        .problem-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .problem-card:hover {
+            border-color: rgba(0,212,255,0.3);
+            transform: translateY(-4px);
+        }
+        .problem-icon {
+            font-size: 2rem;
+            margin-bottom: 16px;
+        }
+        .problem-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .problem-card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        /* Model section */
+        .model-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+        .model-step {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            text-align: center;
+            position: relative;
+        }
+        .step-num {
+            width: 48px; height: 48px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin: 0 auto 20px;
+        }
+        .model-step h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .model-step p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* Numbers */
+        .numbers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+        }
+        .number-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+        }
+        .number-big {
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        .number-unit {
+            font-size: 1rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .number-desc {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        /* Advantages */
+        .advantages-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+        .advantage-item {
+            display: flex;
+            gap: 16px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 28px;
+        }
+        .advantage-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            width: 48px; height: 48px;
+            background: rgba(0,212,255,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .advantage-item h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .advantage-item p {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* CTA section */
+        .cta-section {
+            text-align: center;
+            padding: 120px 0;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(123,97,255,0.08));
+            border: 1px solid rgba(0,212,255,0.15);
+            border-radius: 24px;
+            padding: 80px 40px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .cta-box h2 {
+            font-size: clamp(2rem, 4vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        .cta-box p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Contact form */
+        .contact-form {
+            max-width: 500px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .form-row {
+            display: flex;
+            gap: 16px;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 14px 18px;
+            color: var(--text);
+            font-family: 'Heebo', sans-serif;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--accent);
+        }
+        .contact-form textarea {
+            height: 120px;
+            resize: vertical;
+        }
+        .contact-form button {
+            background: var(--gradient);
+            color: #fff;
+            border: none;
+            padding: 16px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Heebo', sans-serif;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.3s;
+            box-shadow: 0 4px 30px rgba(0,212,255,0.3);
+        }
+        .contact-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 40px rgba(0,212,255,0.4);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--card-border);
+            padding: 40px 0;
+            text-align: center;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile */
+        .mobile-menu { display: none; }
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .mobile-menu {
+                display: block;
+                background: none;
+                border: none;
+                color: var(--text);
+                font-size: 1.5rem;
+                cursor: pointer;
+            }
+            .hero-stats { flex-direction: column; gap: 24px; }
+            .form-row { flex-direction: column; }
+            .problem-grid,
+            .advantages-list { grid-template-columns: 1fr; }
+        }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="glow-orb blue"></div>
+    <div class="glow-orb purple"></div>
+
+    <!-- Nav -->
+    <nav>
+        <div class="container">
+            <div class="logo">LANIR DC</div>
+            <ul class="nav-links">
+                <li><a href="#problem">ההזדמנות</a></li>
+                <li><a href="#model">המודל</a></li>
+                <li><a href="#numbers">המספרים</a></li>
+                <li><a href="#advantages">יתרונות</a></li>
+                <li><a href="#contact" class="nav-cta">צור קשר</a></li>
+            </ul>
+            <button class="mobile-menu" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">מקבלים שותפים חדשים</div>
+                <h1>הנכס שלכם.<br><span class="highlight">הדאטה סנטר שלנו.</span></h1>
+                <p>קבוצת לניר מציעה לבעלי נכסי תעשייה בפריפריה שותפות ייחודית: אנחנו מקימים ומפעילים דאטה סנטר על הנכס שלכם – אתם נהנים מהכנסות פי 6 ומשדרוג שווי הנכס.</p>
+                <a href="#contact" class="hero-cta">בואו נדבר ←</a>
+                <div class="hero-stats">
+                    <div>
+                        <div class="stat-num">×6.5</div>
+                        <div class="stat-label">גידול בהכנסה השנתית</div>
+                    </div>
+                    <div>
+                        <div class="stat-num">₪0</div>
+                        <div class="stat-label">השקעה נדרשת מבעל הנכס</div>
+                    </div>
+                    <div>
+                        <div class="stat-num">5MW+</div>
+                        <div class="stat-label">הספק חשמל למתקן</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem -->
+    <section id="problem">
+        <div class="container">
+            <div class="section-label fade-up">ההזדמנות</div>
+            <h2 class="section-title fade-up">מהפכת ה-AI יוצרת ביקוש חסר תקדים לתשתיות</h2>
+            <p class="section-desc fade-up">ישראל סובלת ממחסור כרוני בשטחי דאטה סנטר. הפריפריה הפכה למיקום אסטרטגי מועדף — ונכסי תעשייה ישנים הם הזהב החדש.</p>
+            <div class="problem-grid">
+                <div class="problem-card fade-up">
+                    <div class="problem-icon">⚡</div>
+                    <h3>מצוקת חשמל במרכז</h3>
+                    <p>חיבורי מתח גבוה במרכז הארץ דורשים 5-7 שנות המתנה. נכסים בפריפריה עם חיבורי חשמל קיימים שווים הון.</p>
+                </div>
+                <div class="problem-card fade-up">
+                    <div class="problem-icon">🌡️</div>
+                    <h3>יתרון אקלימי</h3>
+                    <p>האקלים היבש בנגב מאפשר קירור חופשי (Free Cooling) כ-50% מהשנה — חיסכון של מיליוני שקלים בשנה בעלויות חשמל.</p>
+                </div>
+                <div class="problem-card fade-up">
+                    <div class="problem-icon">🏭</div>
+                    <h3>שוק של מוכרים</h3>
+                    <p>עסקאות של מאות מיליוני שקלים בשנה (Google, Nebius) מוכיחות: מי שיש לו תשתית — מרוויח. ביקוש של 300M+ ש"ח NOI בעסקה בודדת.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Model -->
+    <section id="model" style="background: rgba(0,212,255,0.02);">
+        <div class="container">
+            <div class="section-label fade-up">המודל</div>
+            <h2 class="section-title fade-up">איך השותפות עובדת</h2>
+            <p class="section-desc fade-up">מודל PropCo-OpCo מוכח — הפרדה בין הנדל"ן לפעילות הטכנולוגית. בעל הנכס נהנה מהכנסה קבועה + אפסייד, בלי להשקיע שקל.</p>
+            <div class="model-steps">
+                <div class="model-step fade-up">
+                    <div class="step-num">1</div>
+                    <h3>אתם מביאים את הנכס</h3>
+                    <p>מבנה תעשייה עם חיבור חשמל ושטח מתאים. אנחנו מעריכים את הפוטנציאל ומציעים מתווה.</p>
+                </div>
+                <div class="model-step fade-up">
+                    <div class="step-num">2</div>
+                    <h3>אנחנו מקימים ומממנים</h3>
+                    <p>קבוצת לניר מממנת 100% מהבנייה, המערכות הטכנולוגיות, האנרגיה הסולארית והאגירה.</p>
+                </div>
+                <div class="model-step fade-up">
+                    <div class="step-num">3</div>
+                    <h3>שניכם מרוויחים</h3>
+                    <p>דמי שכירות מובטחים + תמלוגים מההכנסות + חלק ברווחים. הכנסה פי 6.5 מהקיים — מהיום הראשון.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Numbers -->
+    <section id="numbers">
+        <div class="container">
+            <div class="section-label fade-up">המספרים</div>
+            <h2 class="section-title fade-up">הפוטנציאל הכלכלי</h2>
+            <p class="section-desc fade-up">מבוסס על עסקאות אמת בשוק הישראלי 2025-2026 ועלויות הקמה ייחודיות של קבוצת לניר.</p>
+            <div class="numbers-grid">
+                <div class="number-card fade-up">
+                    <div class="number-big">27.5</div>
+                    <div class="number-unit">מיליון ₪ / שנה</div>
+                    <div class="number-desc">הכנסות צפויות למתקן 5MW</div>
+                </div>
+                <div class="number-card fade-up">
+                    <div class="number-big">13</div>
+                    <div class="number-unit">מיליון ₪ EBITDA</div>
+                    <div class="number-desc">רווח תפעולי שנתי</div>
+                </div>
+                <div class="number-card fade-up">
+                    <div class="number-big">7.5%</div>
+                    <div class="number-unit">מס חברות בלבד</div>
+                    <div class="number-desc">הטבת מפעל מועדף באזור פיתוח א'</div>
+                </div>
+                <div class="number-card fade-up">
+                    <div class="number-big">1.3</div>
+                    <div class="number-unit">מיליון ₪ / שנה</div>
+                    <div class="number-desc">הכנסה צפויה לבעל הנכס</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advantages -->
+    <section id="advantages" style="background: rgba(0,212,255,0.02);">
+        <div class="container">
+            <div class="section-label fade-up">למה קבוצת לניר</div>
+            <h2 class="section-title fade-up">היתרון התחרותי שלנו</h2>
+            <div class="advantages-list">
+                <div class="advantage-item fade-up">
+                    <div class="advantage-icon">☀️</div>
+                    <div>
+                        <h3>אנרגיה סולארית בעלות שוברת שוק</h3>
+                        <p>הקמת מערכות סולאריות ב-1,800 ₪/kW — נמוך ב-30% מהשוק. אנרגיה ממרכז עלות למרכז רווח.</p>
+                    </div>
+                </div>
+                <div class="advantage-item fade-up">
+                    <div class="advantage-icon">🔋</div>
+                    <div>
+                        <h3>אגירת אנרגיה ב-$150/kWh</h3>
+                        <p>מחירי סוללות ברמת יבואן — ארביטראז' אנרגטי שמניב עד 1.5 מיליון ₪ בשנה.</p>
+                    </div>
+                </div>
+                <div class="advantage-item fade-up">
+                    <div class="advantage-icon">📡</div>
+                    <div>
+                        <h3>תשתית תקשורת עצמאית</h3>
+                        <p>רישיון תקשורת וצוות טכנולוגי — חבילה אחודה של אירוח + רוחב פס ללקוחות.</p>
+                    </div>
+                </div>
+                <div class="advantage-item fade-up">
+                    <div class="advantage-icon">🏗️</div>
+                    <div>
+                        <h3>בנייה מודולרית</h3>
+                        <p>גישה שלבית שמקטינה סיכון — הקמה מתחילה רק אחרי חוזה עוגן חתום.</p>
+                    </div>
+                </div>
+                <div class="advantage-item fade-up">
+                    <div class="advantage-icon">🛡️</div>
+                    <div>
+                        <h3>הגנה מלאה לבעל הנכס</h3>
+                        <p>דמי שכירות רצפה מובטחים + תמלוגי מחזור + מנגנון BMBY אחרי 5 שנים.</p>
+                    </div>
+                </div>
+                <div class="advantage-item fade-up">
+                    <div class="advantage-icon">💰</div>
+                    <div>
+                        <h3>מענקים ממשלתיים</h3>
+                        <p>זכאות למענק 20% על השקעה בציוד — עד 28 מיליון ₪ שמקטינים את הסיכון.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <div class="cta-box">
+                <h2 class="fade-up">יש לכם נכס תעשייתי בפריפריה?</h2>
+                <p class="fade-up">השאירו פרטים ונחזור אליכם תוך 24 שעות עם הערכה ראשונית של הפוטנציאל.</p>
+                <form class="contact-form fade-up" onsubmit="handleSubmit(event)">
+                    <div class="form-row">
+                        <input type="text" name="name" placeholder="שם מלא" required>
+                        <input type="tel" name="phone" placeholder="טלפון" required>
+                    </div>
+                    <input type="email" name="email" placeholder="אימייל">
+                    <input type="text" name="location" placeholder="מיקום הנכס (עיר / אזור תעשייה)">
+                    <input type="text" name="size" placeholder="שטח הנכס (מ"ר) וחיבור חשמל (אם ידוע)">
+                    <textarea name="message" placeholder="ספרו לנו על הנכס..."></textarea>
+                    <button type="submit">שלחו פרטים ←</button>
+                </form>
+                <p id="form-success" style="display:none; color: var(--green); margin-top: 20px; font-weight: 600;">✓ הפרטים נשלחו בהצלחה! נחזור אליכם בהקדם.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2026 קבוצת לניר | כל הזכויות שמורות</p>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+        // Form handler
+        function handleSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const data = new FormData(form);
+            // TODO: connect to backend/email
+            console.log('Form data:', Object.fromEntries(data));
+            form.style.display = 'none';
+            document.getElementById('form-success').style.display = 'block';
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                e.preventDefault();
+                document.querySelector(a.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
