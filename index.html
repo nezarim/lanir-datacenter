@@ -1216,7 +1216,11 @@
                 <div data-lang-he>
                     <h2 class="fade-up">יש לכם נכס תעשייתי בפריפריה?</h2>
                     <p class="fade-up">השאירו פרטים ונחזור אליכם תוך 24 שעות עם הערכה ראשונית של הפוטנציאל.</p>
-                    <form class="contact-form fade-up" onsubmit="handleSubmit(event)">
+                    <form class="contact-form fade-up" action="https://formsubmit.co/refael@nirsolar.com" method="POST">
+                        <input type="hidden" name="_subject" value="ליד חדש מאתר Lanir DC">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_next" value="">
+                        <input type="text" name="_honey" style="display:none">
                         <div class="form-row">
                             <input type="text" name="name" placeholder="שם מלא" required>
                             <input type="tel" name="phone" placeholder="טלפון" required>
@@ -1232,7 +1236,11 @@
                 <div data-lang-en>
                     <h2 class="fade-up">Own an Industrial Property in Israel?</h2>
                     <p class="fade-up">Leave your details and we'll get back to you within 24 hours with an initial potential assessment.</p>
-                    <form class="contact-form fade-up" onsubmit="handleSubmit(event)">
+                    <form class="contact-form fade-up" action="https://formsubmit.co/refael@nirsolar.com" method="POST">
+                        <input type="hidden" name="_subject" value="New Lead from Lanir DC Website">
+                        <input type="hidden" name="_captcha" value="false">
+                        <input type="hidden" name="_next" value="">
+                        <input type="text" name="_honey" style="display:none">
                         <div class="form-row">
                             <input type="text" name="name" placeholder="Full Name" required>
                             <input type="tel" name="phone" placeholder="Phone" required>
@@ -1320,16 +1328,7 @@
 
         document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-        // Form handler
-        function handleSubmit(e) {
-            e.preventDefault();
-            const form = e.target;
-            const data = new FormData(form);
-            // TODO: connect to backend/email
-            console.log('Form data:', Object.fromEntries(data));
-            form.style.display = 'none';
-            document.getElementById('form-success').style.display = 'block';
-        }
+        // Form handler - submissions go to refael@nirsolar.com via FormSubmit.co
 
         // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(a => {
